@@ -85,7 +85,7 @@ const getData = () => {
 const showStats = (data) => {
   insertIntoMsgQueue(data.messages);
   term('\n').eraseLineAfter.green(
-    "Health: %s (max %s) < food %s (max %s) | Hygene: %s (max %s) \nAttention: %s (max %s) | Age: %s\n",
+    "💛  HEALTH: %s (max %s) | 🍔   food %s (max %s)  💩  Hygene: %s (max %s) \n😀  ATTENTION: %s (max %s) \n   Age: %s\n",
     data.stats.health || 0,
     data.stats.maxHeath || 0,
     data.stats.food || 0,
@@ -103,7 +103,7 @@ const showEndScreen = () => {
   term.singleColumnMenu(itemsEnd, function (error, response) {
     switch (response.selectedIndex) {
       case 0:
-        doCreate();
+        doAction('create', 'Creating new critter...\n');
         break;
       case 1:
         terminate();
@@ -139,10 +139,13 @@ const showOptionsScreen = () => {
         refresh();
         break;
       case 1:
-        doFeed();
+        doAction('feed');
         break;
       case 2:
-        doClean();
+        doAction('clean');
+        break;
+      case 3:
+        doAction('attention');
         break;
       default:
         break;
@@ -150,43 +153,12 @@ const showOptionsScreen = () => {
   });
 }
 
-const doCreate = () => {
+const doAction = (action, msg) => {
   term.clear();
-  term.bold.cyan('Creating new critter...\n');
-
-  axios.get(server + '/api/create')
-    .then((response) => {
-      // handle success
-      insertIntoMsgQueue(response.data.messages);
-      refresh();
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    });
-}
-
-const doFeed = () => {
-  term.clear();
-  term.bold.cyan('Retrieving data...\n');
-
-  axios.get(server + '/api/feed')
-    .then((response) => {
-      // handle success
-      insertIntoMsgQueue(response.data.messages);
-      refresh();
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    });
-}
-
-const doClean = () => {
-  term.clear();
-  term.bold.cyan('Retrieving data...\n');
-
-  axios.get(server + '/api/clean')
+  if(msg) {
+    term.bold.cyan(msg);
+  }
+  axios.get(server + '/api/'+action)
     .then((response) => {
       // handle success
       insertIntoMsgQueue(response.data.messages);

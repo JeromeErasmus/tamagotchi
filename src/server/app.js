@@ -35,6 +35,10 @@ app.get('/api/clean', function (req, res) {
   res.send(pet.doClean());
 });
 
+app.get('/api/attention', function (req, res) {
+  res.send(pet.doAttention());
+});
+
 app.get('/api/getstatus', function (req, res) {
   res.send(pet.getStatus());
 });
