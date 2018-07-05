@@ -12,6 +12,36 @@ describe('test the server endpoints', () => {
   before(() => {
     server = methods.app.listen(8080, () => methods.run());
   });
+
+  describe('test GET /api/getstatus', () => {
+    it('returns status 200', () => {
+      let url = serverUrl + "/api/getstatus";
+      request(url, (error, response, body) => {
+        expect(response.statusCode).to.equal(200);
+      });
+    });
+    it('expect isAlive to be equal to false', () => {
+      request(url, (error, response, body) => {
+        var jsonObj = JSON.parse(body);
+        expect(jsonObj).to.have.property('isAlive').to.equal(false);
+      });
+    });
+  });
+
+  describe('test GET /api/create', () => {
+    it('returns status 200', () => {
+      let url = serverUrl + "/api/create";
+      request(url, (error, response, body) => {
+        expect(response.statusCode).to.equal(200);
+      });
+    });
+    it('returns status 200', () => {
+      let url = serverUrl + "/api/create";
+      request(url, (error, response, body) => {
+        expect(JSON.parse(body)).to.equal(true);
+      });
+    });
+  }); 
   
   describe('test GET /api/getstatus', () => {
     it('returns status 200', () => {
@@ -21,17 +51,14 @@ describe('test the server endpoints', () => {
       });
     });
 
-    it('expect status properties to be above 0', () => {
+    it('expect status properties to be greater than 0 and isAlive is true', () => {
       request(url, (error, response, body) => {
         var jsonObj = JSON.parse(body);
-        // check props
         expect(jsonObj).to.have.property('isAlive').to.equal(true);
         expect(jsonObj.stats).to.be.a('object');
-        
         Object.keys(jsonObj.stats).forEach(element => {
           expect(jsonObj.stats[element].to.be.greaterThan(0));
         });
-
       });
     });
   });
