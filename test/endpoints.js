@@ -1,8 +1,8 @@
 const request = require('request');
 const chai = require('chai');
 const expect = chai.expect;
-let methods = require('../src/server/app.js');
 const serverUrl = 'http://localhost:8080';
+let methods = require('../src/server/app.js');
 let server = null;
 
 describe('test the server endpoints', () => {

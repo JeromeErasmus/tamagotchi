@@ -33,16 +33,6 @@ term.on('key', (name, matches, data) => {
   }
 });
 
-
-// const intervalId = setInterval(() => {
-//   if (awaitingUserInput) {
-//     refresh();
-//     awaitingUserInput = false;
-//   }
-// }, 100);
-
-
-
 const getData = () => {
   term.clear();
   term.bold.cyan('Retrieving data...\n');
@@ -199,4 +189,3 @@ const refresh = () => {
 }
 
 showMainScreen();
-// refresh();

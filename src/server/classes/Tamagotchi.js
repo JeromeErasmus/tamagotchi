@@ -21,6 +21,12 @@ class Thamagotchi {
     this._stageIndex = 0;
   }
 
+  /**
+   * Create a new critter.
+   *
+   * @param  none
+   * @return Object
+   */
   initNew() {
     this.health = this._maxHealth;
     this.food = this._maxFood;
@@ -35,7 +41,12 @@ class Thamagotchi {
     };
   }
 
-  // this function is the game cycle that controls the smarts of the critter. 
+  /**
+   * This function is the game cycle that controls the smarts of the critter. 
+   *
+   * @param  none
+   * @return Boolean
+   */
   runCycle() {
     // if we hit a random number that is less than 50% we drop food
     if(this.food > 0 && Math.random() < 0.50) {
@@ -64,28 +75,50 @@ class Thamagotchi {
       }
     }
     this.countdownTimer();
+    return true;
   }
   
-  // here we calculate the age based off a really simple countdown
+  /**
+   * here we calculate the age based off a really simple countdown
+   *
+   * @param  none
+   * @return Boolean
+   */
   countdownTimer() {
     const unit = this._maxAge/this._stages.length;
     if(this._maxAgeCount < this._maxAge) {
       this._maxAgeCount++;
       this._stageIndex = Math.floor(this._maxAgeCount / unit);
     }
+    return true;
   }
 
-  // check if our creature has staved itself. If yes then return false
+  /**
+   * check if our creature is alive. If yes then return false
+   *
+   * @param  none
+   * @return Boolean
+   */
   isAlive() {
     return this.health <= 0 ? false : true;
   }
   
-  // check if our creature has staved itself. If yes then return false
+  /**
+   * check if our creature is sleeping. If yes then return false
+   *
+   * @param  none
+   * @return Boolean
+   */
   isSleeping() {
     return this.sleep <= 0 ? false : true;
   }
 
-  // send the critter to sleep
+  /**
+   * send the critter to sleep
+   *
+   * @param  none
+   * @return Boolean
+   */
   doSleep() {
     if (this.isAlive() && !this.isSleeping()) {
       this.sleep = true;
@@ -95,9 +128,15 @@ class Thamagotchi {
         clearTimeout(timerId);
       }, t)
     }
+    return true;
   } 
 
-  // feed the critter
+  /**
+   * feed the critter
+   *
+   * @param  none
+   * @return Object
+   */
   doFeed() {
     let messages = [];
     if (this.isAlive() && !this.isSleeping()) {
@@ -123,8 +162,13 @@ class Thamagotchi {
       };
     }
   }
- 
-  // clean up after the critter
+  
+  /**
+   * clean up after the critter
+   *
+   * @param  none
+   * @return Object
+   */
   doClean() {
     let messages = [];
     if(this.isAlive() && !this.isSleeping()) {
@@ -144,7 +188,12 @@ class Thamagotchi {
     }
   }
 
-  // play with the critter
+  /**
+   * play with the critter
+   *
+   * @param  none
+   * @return Object
+   */
   doAttention() {
     let messages = [];
     if(this.isAlive() && !this.isSleeping()) {
@@ -163,7 +212,12 @@ class Thamagotchi {
     }
   }
 
-  // increment a property value and create notification message
+  /**
+   * increment a property value and create notification message
+   *
+   * @param  none
+   * @return String
+   */
   incrementProperty(prop, propInc, propMax, label) {
     let newProp = prop + propInc;
       if(newProp >= propMax) {
@@ -173,7 +227,12 @@ class Thamagotchi {
       return `${label} increased from ${prop} to ${newProp}`;
   }
 
-  // get a status update of the critters properties
+  /**
+   * get a status update of the critters properties
+   *
+   * @param  none
+   * @return Object
+   */
   getStatus() {
     let messages = [];
     if(this.isSleeping()) {
@@ -199,11 +258,18 @@ class Thamagotchi {
     };
   }
 
+  /**
+   * Log server stats to console. 
+   *
+   * @param  none
+   * @return Boolean
+   */
   logStats() {
     console.log('-'.repeat(80));
     console.log('HEALTH: ', this.health, ' | food: ', this.food, ' | hygene: ', this.hygene);
     console.log('ATTENTION: ', this.attention);
     console.log('Action: ', this.sleep ? 'sleeping' : '-');
+    return true;
   }
 
   // ----------------------------------------------

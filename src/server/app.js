@@ -21,22 +21,52 @@ const run = () => {
   }, gameInterval)
 }
 
+/**
+ * Create a new Tamagotchi critter.
+ *
+ * @param  none
+ * @return Json
+ */
 app.get('/api/create', function (req, res) {
   res.send(pet.initNew());
 });
 
+/**
+ * Feeds the Tamagotchi critter.
+ *
+ * @param  none
+ * @return Json
+ */
 app.get('/api/feed', function (req, res) {
   res.send(pet.doFeed());
 });
 
+/**
+ * Cleans up the Tamagotchi critters poop.
+ *
+ * @param  none
+ * @return Json
+ */
 app.get('/api/clean', function (req, res) {
   res.send(pet.doClean());
 });
 
+/**
+ * Give the Tamagotchi critter some attention.
+ *
+ * @param  none
+ * @return Json
+ */
 app.get('/api/attention', function (req, res) {
   res.send(pet.doAttention());
 });
 
+/**
+ * Get status for the Tamagotchi critter.
+ *
+ * @param  none
+ * @return Json
+ */
 app.get('/api/getstatus', function (req, res) {
   res.send(pet.getStatus());
 });
