@@ -1,25 +1,34 @@
 // We define a class for our pet here and set up some basic behaviours and properties.
 class Thamagotchi {
   constructor(initName) {
-    this._name = initName;
-    this._health = 0;
-    this._food = 30;
-    this._hygene = 10;
-    this._attention = 30;
-    this._maxHealth = 100;
+    this._maxHealth = 50;
     this._maxFood = 30;
     this._maxHygene = 10;
-    this._maxSleep = 30;
-    this._maxAttention = 30;
+    this._maxAttention = 15;
+    this._name = initName;
+    this._health = 0;
+    this._food = this._maxFood;
+    this._hygene = this._maxHygene;
+    this._attention = this._maxHygene;
     this._foodInc = 2;
     this._hygeneInc = 1;
     this._attentionInc = 1;
     this._sleep = false;
     this._sleepDuration = 5000;
+    this._maxAge = 60; // time in seconds
+    this._maxAgeCount = 0;
+    this._stages = ['egg', 'infant', 'adult', 'elderly'];
+    this._stageIndex = 0;
   }
 
   initNew() {
-    this.health = 100;
+    this.health = this._maxHealth;
+    this.food = this._maxFood;
+    this.hygene = this._maxHygene;
+    this.attention = this._maxAttention;
+    this._maxAgeCount = 0;
+    this._stageIndex = 0;
+    
     return {
       success: true,
       messages: ["You created a new critter."]
@@ -29,7 +38,7 @@ class Thamagotchi {
   // this function is the game cycle that controls the smarts of the critter. 
   runCycle() {
     // if we hit a random number that is less than 50% we drop food
-    if(this.food > 0 && Math.random() < 0.75) {
+    if(this.food > 0 && Math.random() < 0.50) {
       this.food --;
     }
 
@@ -41,17 +50,31 @@ class Thamagotchi {
       this.health ++;
     }
 
-    // if we hit a random number that is less than 10% we perform a poop and reduce hygene. 
-    if(Math.random() < 0.1) {
+    // if we hit a random number that is less than 15% we sleep. 
+    if(Math.random() < 0.15) {
       this.doSleep();
     }
 
     // if we hit a random number that is less than 50% we drop attention
-    if(this.attention > 0 && Math.random() < 0.50) {
+    if(this.attention > 0 && Math.random() < 0.25) {
       this.attention --;
+      if(this.attention <= 0 && this.health >= 0) {
+        this.health --;
+        console.log(`No attention to critter. Health depleted to ${this.health}`);
+      }
     }
+    this.countdownTimer();
   }
   
+  // here we calculate the age based off a really simple countdown
+  countdownTimer() {
+    const unit = this._maxAge/this._stages.length;
+    if(this._maxAgeCount < this._maxAge) {
+      this._maxAgeCount++;
+      this._stageIndex = Math.floor(this._maxAgeCount / unit);
+    }
+  }
+
   // check if our creature has staved itself. If yes then return false
   isAlive() {
     return this.health <= 0 ? false : true;
@@ -84,7 +107,7 @@ class Thamagotchi {
       // if we hit a random number that is less than 25% we perform a poop and reduce hygene. 
       if(Math.random() < 0.25) {
         if(this.hygene > 0) {
-          this.hygene --;
+          this.hygene -=2;
         }
         messages.push(`Your critter did a poop. Hygene depleted to ${this.hygene}`);
       }
@@ -177,7 +200,7 @@ class Thamagotchi {
   }
 
   logStats() {
-    console.log('--------------------------------------');
+    console.log('-'.repeat(80));
     console.log('HEALTH: ', this.health, ' | food: ', this.food, ' | hygene: ', this.hygene);
     console.log('ATTENTION: ', this.attention);
     console.log('Action: ', this.sleep ? 'sleeping' : '-');

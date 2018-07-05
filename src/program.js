@@ -1,6 +1,6 @@
 let term = require('terminal-kit').terminal;
 let axios = require('axios');
-let awaitingUserInput = true;
+// let awaitingUserInput = true;
 let messages = [];
 const server = 'http://localhost:8080';
 
@@ -34,17 +34,13 @@ term.on('key', (name, matches, data) => {
 });
 
 
-const intervalId = setInterval(() => {
-  if (awaitingUserInput) {
-    refresh();
-    awaitingUserInput = false;
-  }
-}, 100);
+// const intervalId = setInterval(() => {
+//   if (awaitingUserInput) {
+//     refresh();
+//     awaitingUserInput = false;
+//   }
+// }, 100);
 
-// show the context menu to the user
-const refresh = () => {
-  getData();
-}
 
 
 const getData = () => {
@@ -55,6 +51,7 @@ const getData = () => {
     .then((response) => {
       // handle success
       if (response && response.data) {
+        
         term.clear();
         term.bold.cyan('Choose from one of the following actions below...\n');
         term.green('Hit CTRL-C to quit.\n');
@@ -84,6 +81,12 @@ const getData = () => {
 
 const showStats = (data) => {
   insertIntoMsgQueue(data.messages);
+  term('\n').eraseLineAfter.green('You may also control the critters actions via the end points below:\n');
+  term('\n').eraseLineAfter.green(server+'/api/create');
+  term('\n').eraseLineAfter.green(server+'/api/feed');
+  term('\n').eraseLineAfter.green(server+'/api/clean');
+  term('\n').eraseLineAfter.green(server+'/api/attention');
+  term('\n\n').eraseLineAfter.green('-'.repeat(80));
   term('\n').eraseLineAfter.green(
     "💛  HEALTH: %s (max %s) | 🍔   food %s (max %s)  💩  Hygene: %s (max %s) \n😀  ATTENTION: %s (max %s) \n   Age: %s\n",
     data.stats.health || 0,
@@ -96,10 +99,16 @@ const showStats = (data) => {
     data.stats.maxAttention || 0,
     1,
   );
+  term('').eraseLineAfter.green('-'.repeat(80));
 }
 
-const showEndScreen = () => {
-  term('\n').eraseLineAfter.red('woops...your critter has died. Take better care of it next time :/');
+const showMainScreen = (state) => {
+  if(state && state  === 'end') {
+    term('\n').eraseLineAfter.red('woops...your critter has died. Take better care of it next time :/');
+  } else {
+    term('\n').eraseLineAfter.green('Hi! Select Create New Critter to start a new Tamagotchi!\n');
+    term('\n').eraseLineAfter.green('Once your new critter is created you can select refresh update the screen. And also take note that your critter may fall asleep from time to time for about 5 seconds. You will not be able to control it when it is asleep.\nHave fun!\n');
+  }
   term.singleColumnMenu(itemsEnd, function (error, response) {
     switch (response.selectedIndex) {
       case 0:
@@ -183,3 +192,11 @@ const writeConsoleMessage = () => {
   term('\n');
   messages = [];
 }
+
+// show the context menu to the user
+const refresh = () => {
+  getData();
+}
+
+showMainScreen();
+// refresh();

@@ -3,7 +3,7 @@ const express = require('express');
 const Tamagotchi = require('./classes/Tamagotchi.js');
 
 // define props
-const gameInterval = 2000;
+const gameInterval = 1000;
 let pet = new Tamagotchi(os.userInfo().username);
 
 // construct our Express server
@@ -14,11 +14,9 @@ const run = () => {
   setInterval(() => {
     if (pet && pet.isAlive()) {
       pet.runCycle();
+      pet.logStats();
     } else {
       // critter died
-    }
-    if(pet) {
-      pet.logStats();
     }
   }, gameInterval)
 }
