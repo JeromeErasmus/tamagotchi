@@ -8,8 +8,15 @@ let pet = new Tamagotchi(os.userInfo().username);
 
 // construct our Express server
 const app = express();
+app.use(express.static('dist'));
 
-// the is the main game loop. It uses a set interval time to update each game loop every gameInterval duration in milliseconds
+/**
+ * the is the main game loop. 
+ * It uses a set interval time to update each game loop every gameInterval duration in milliseconds
+ *
+ * @param  none
+ */
+
 const run = () => {
   setInterval(() => {
     if (pet && pet.isAlive()) {

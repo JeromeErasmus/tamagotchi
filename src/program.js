@@ -43,7 +43,7 @@ const getData = () => {
       if (response && response.data) {
         
         term.clear();
-        term.bold.cyan('Choose from one of the following actions below...\n');
+        term.bold.gray('Choose from one of the following actions below...\n');
         term.green('Hit CTRL-C to quit.\n');
         // term.green('Hit R to refresh.\n\n');
         showStats(response.data);
@@ -51,7 +51,7 @@ const getData = () => {
         
         if (!response.data.isAlive) {
           // check is alive
-          showEndScreen();
+          showMainScreen('end');
           return false;
         } else if (response.data.sleep.status === true) {
           // check is sleeping
@@ -87,16 +87,21 @@ const showStats = (data) => {
     data.stats.maxHygene || 0,
     data.stats.attention || 0,
     data.stats.maxAttention || 0,
-    1,
+    data.stats.age.label || '',
   );
   term('').eraseLineAfter.green('-'.repeat(80));
+
+  if(data.stats.age && data.stats.age.data) {
+    term('\n').eraseLineAfter.gray(data.stats.age.data);
+    term('\n');
+  }
 }
 
 const showMainScreen = (state) => {
   if(state && state  === 'end') {
-    term('\n').eraseLineAfter.red('woops...your critter has died. Take better care of it next time :/');
+    term('\n').eraseLineAfter.red('woops...your critter has died. :/');
   } else {
-    term('\n').eraseLineAfter.green('Hi! Select Create New Critter to start a new Tamagotchi!\n');
+    term('\n').eraseLineAfter.green('Hi! Select Create New Critter to start a new Tamagotchi critter!\n');
     term('\n').eraseLineAfter.green('Once your new critter is created you can select refresh update the screen. And also take note that your critter may fall asleep from time to time for about 5 seconds. You will not be able to control it when it is asleep.\nHave fun!\n');
   }
   term.singleColumnMenu(itemsEnd, function (error, response) {
@@ -177,7 +182,7 @@ const insertIntoMsgQueue = (data) => {
 
 const writeConsoleMessage = () => {
   messages.forEach(element => {
-    term('\n').eraseLineAfter.green('> %s', element);
+    term('\n').eraseLineAfter.cyan('> %s', element);
   });
   term('\n');
   messages = [];
