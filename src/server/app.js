@@ -24,10 +24,7 @@ const run = () => {
 }
 
 app.get('/api/create', function (req, res) {
-  pet.initNew();
-  if(pet) {
-    res.send(true);
-  }
+  res.send(pet.initNew());
 });
 
 app.get('/api/feed', function (req, res) {

@@ -18,6 +18,10 @@ class Thamagotchi {
 
   initNew() {
     this.health = 100;
+    return {
+      success: true,
+      messages: ["✨ You created a new critter."]
+    };
   }
 
   // this function is the game cycle that controls the smarts of the critter. 
@@ -39,6 +43,11 @@ class Thamagotchi {
     if(Math.random() < 0.15) {
       console.log("DO SLEEP");
       this.doSleep();
+    }
+
+    // if we hit a random number that is less than 50% we drop attention
+    if(this.attention > 0 && Math.random() < 0.50) {
+      this.attention --;
     }
   }
   
@@ -97,8 +106,27 @@ class Thamagotchi {
   doClean() {
     let messages = [];
     if(this.isAlive() && !this.isSleeping()) {
-      messages.push("You cleaned up!");
+      messages.push("✨ You cleaned up!");
       let result = this.incrementProperty(this.hygene, this._hygeneInc, this._maxHygene, 'hygene');
+      messages.push(result);
+
+      return { 
+        success: true,
+        messages: messages
+      };
+    } else {
+      return {
+        success: false,
+        messages: messages
+      };
+    }
+  }
+
+  // play with the critter
+  doAttention() {
+    let messages = [];
+    if(this.isAlive() && !this.isSleeping()) {
+      let result = this.incrementProperty(this.hygene, this._hygeneInc, this._maxHygene, 'attention');
       messages.push(result);
 
       return { 
@@ -151,7 +179,8 @@ class Thamagotchi {
 
   logStats() {
     console.log('--------------------------------------');
-    console.log('health: ', this.health, 'food: ', this.food, 'hygene: ', this.hygene);
+    console.log('HEALTH: ', this.health, 'food: ', this.food, 'hygene: ', this.hygene);
+    console.log('ATTENTION: ', this.attention);
   }
 
   // ----------------------------------------------

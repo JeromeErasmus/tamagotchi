@@ -3,9 +3,7 @@ let axios = require('axios');
 let awaitingUserInput = true;
 let messages = [];
 const server = 'http://localhost:8080';
-let itemsStart = [
-  'a. Create Critter',
-];
+
 let items = [
   'a. Refresh',
   'b. Feed critter',
@@ -13,7 +11,7 @@ let items = [
   'c. Play with critter',
 ];
 let itemsEnd = [
-  'a. Restart',
+  'a. Create New Critter',
   'b. Quit'
 ]
 
@@ -84,22 +82,6 @@ const getData = () => {
     })
 }
 
-const showStartScreen = () => {
-  term('\n').eraseLineAfter.red('woops...your critter has died. Take better care of it next time :/');
-  term.singleColumnMenu(itemsEnd, function (error, response) {
-    switch (response.selectedIndex) {
-      case 0:
-        console.log("RESTATING GAME");
-        break;
-      case 1:
-        terminate();
-        break;
-      default:
-        break;
-    }
-  });
-}
-
 const showStats = (data) => {
   insertIntoMsgQueue(data.messages);
   term('\n').eraseLineAfter.green(
@@ -121,7 +103,7 @@ const showEndScreen = () => {
   term.singleColumnMenu(itemsEnd, function (error, response) {
     switch (response.selectedIndex) {
       case 0:
-        console.log("RESTATING GAME");
+        doCreate();
         break;
       case 1:
         terminate();
@@ -166,6 +148,22 @@ const showOptionsScreen = () => {
         break;
     }
   });
+}
+
+const doCreate = () => {
+  term.clear();
+  term.bold.cyan('Creating new critter...\n');
+
+  axios.get(server + '/api/create')
+    .then((response) => {
+      // handle success
+      insertIntoMsgQueue(response.data.messages);
+      refresh();
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
 }
 
 const doFeed = () => {
