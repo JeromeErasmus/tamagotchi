@@ -2,7 +2,7 @@ const request = require('request');
 const chai = require('chai');
 const expect = chai.expect;
 const serverUrl = 'http://localhost:8080';
-let methods = require('../src/server/app.js');
+let methods = require('../src/server/app');
 let server = null;
 
 describe('test the server endpoints', () => {

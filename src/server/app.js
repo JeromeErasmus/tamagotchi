@@ -1,6 +1,6 @@
 const os = require('os');
 const express = require('express');
-const Tamagotchi = require('./classes/Tamagotchi.js');
+const Tamagotchi = require('./classes/Tamagotchi');
 
 // define props
 const gameInterval = 1000;

@@ -1,2 +1,2 @@
-let methods = require('./app.js');
+let methods = require('./app');
 methods.app.listen(8080, () => methods.run());

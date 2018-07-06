@@ -1,5 +1,6 @@
 // We define a class for our pet here and set up some basic behaviours and properties.
 let fs = require('fs');
+
 class Thamagotchi {
   constructor(initName) {
     this._maxHealth = 50;
@@ -22,8 +23,8 @@ class Thamagotchi {
       {label:'egg/infant', src:'src/assets/egg.txt', data: null},
       {label:'teen', src:'src/assets/teen.txt', data: null},
       {label:'adult', src:'src/assets/adult.txt', data: null},
-      {label:'elderly', src:'src/assets/adult.txt', data: null},
-      {label:'dead', src:'', data: null}
+      {label:'elderly', src:'src/assets/elderly.txt', data: null},
+      {label:'dead', src:'src/assets/dead.txt', data: null}
     ];
     this._stageIndex = 0;
 
