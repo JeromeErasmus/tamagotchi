@@ -1,7 +1,8 @@
+require('dotenv').config();
 const request = require('request');
 const chai = require('chai');
 const expect = chai.expect;
-const serverUrl = 'http://localhost:8080';
+const serverUrl = 'http://'+process.env.HOST+':'+process.env.PORT;
 let methods = require('../src/server/app');
 let server = null;
 

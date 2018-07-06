@@ -1,8 +1,9 @@
+require('dotenv').config();
 let term = require('terminal-kit').terminal;
 let axios = require('axios');
 let display = require('./classes/display');
 let messages = [];
-const server = 'http://localhost:8080';
+const server = 'http://'+process.env.HOST+':'+process.env.PORT;
 
 /**
  * Performs GET actions on the API
