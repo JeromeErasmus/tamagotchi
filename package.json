@@ -1,0 +1,28 @@
+{
+  "name": "express-es6-server",
+  "version": "1.0.0",
+  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
+  "main": "src/server/index.js",
+  "scripts": {
+    "start": "node src/server/index.js",
+    "server": "nodemon src/server/index.js",
+    "console": "node src/program.js",
+    "dev": "concurrently \"npm run console\" \"npm run server\"",
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "Jerome Erasmus",
+  "license": "",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chai": "^4.1.2",
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "request": "^2.87.0",
+    "terminal-kit": "^1.17.11",
+    "yarn": "^1.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.3"
+  }
+}
