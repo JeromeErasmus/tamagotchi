@@ -34,7 +34,7 @@ const run = () => {
  * @param  none
  * @return Json
  */
-app.get('/api/create', function (req, res) {
+app.get('/api/create', (req, res) => {
   res.send(pet.initNew());
 });
 
@@ -44,7 +44,7 @@ app.get('/api/create', function (req, res) {
  * @param  none
  * @return Json
  */
-app.get('/api/feed', function (req, res) {
+app.get('/api/feed', (req, res) => {
   res.send(pet.doFeed());
 });
 
@@ -54,7 +54,7 @@ app.get('/api/feed', function (req, res) {
  * @param  none
  * @return Json
  */
-app.get('/api/clean', function (req, res) {
+app.get('/api/clean', (req, res) => {
   res.send(pet.doClean());
 });
 
@@ -64,7 +64,7 @@ app.get('/api/clean', function (req, res) {
  * @param  none
  * @return Json
  */
-app.get('/api/attention', function (req, res) {
+app.get('/api/attention', (req, res) => {
   res.send(pet.doAttention());
 });
 
@@ -74,7 +74,7 @@ app.get('/api/attention', function (req, res) {
  * @param  none
  * @return Json
  */
-app.get('/api/getstatus', function (req, res) {
+app.get('/api/getstatus', (req, res) => {
   res.send(pet.getStatus());
 });
 

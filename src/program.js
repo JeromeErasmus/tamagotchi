@@ -1,7 +1,6 @@
 let term = require('terminal-kit').terminal;
 let axios = require('axios');
 let display = require('./classes/display');
-// let awaitingUserInput = true;
 let messages = [];
 const server = 'http://localhost:8080';
 
@@ -28,7 +27,7 @@ const doAction = (action, msg) => {
     })
     .catch((error) => {
       // If there is an operational error or programming error lets catch it here. 
-      // Asyncronous errors from nodejs will be passed back up here by callback. 
+      // Asyncronous errors from nodejs will be passed back up to here by callback. 
       if (error.response) {
         // The request was made and the server responded with a bad status code
         console.log(error.response.status);

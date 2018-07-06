@@ -1,4 +1,4 @@
-// We define a class for our pet here and set up some basic behaviours and properties.
+// We define a class for our critter here and set up some basic behaviours and properties.
 let fs = require('fs');
 
 class Thamagotchi {
