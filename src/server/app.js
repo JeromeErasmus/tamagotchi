@@ -23,7 +23,7 @@ const run = () => {
       pet.runCycle();
       pet.logStats();
     } else {
-      // critter died
+      // do nothing
     }
   }, gameInterval)
 }

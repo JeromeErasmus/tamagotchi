@@ -9,7 +9,6 @@ let itemsEnd = [
   'a. Create New Critter',
   'b. Quit'
 ]
-
 let itemsSleep = [
   'a. Refresh',
 ]
@@ -45,13 +44,22 @@ term.on('key', (name, matches, data) => {
  * @return Boolean
  */
 const showMainScreen = (state, callback) => {
+  if(!callback) {
+    return false;
+  }
+
   if(state && state  === 'end') {
     term('\n').eraseLineAfter.red('woops...your critter has died. :/');
   } else {
     term('\n').eraseLineAfter.green('Hi! Select Create New Critter to start a new Tamagotchi critter!\n');
     term('\n').eraseLineAfter.green('Once your new critter is created you can select refresh update the screen. And also take note that your critter may fall asleep from time to time for about 5 seconds. You will not be able to control it when it is asleep.\nHave fun!\n');
   }
-  term.singleColumnMenu(itemsEnd, function (error, response) {
+  term.singleColumnMenu(itemsEnd, (error, response) => {
+    if(error) {
+      // A critical error occured. Log output and exit.
+      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      terminate();
+    }
     switch (response.selectedIndex) {
       case 0:
         callback('create', 'Creating new critter...\n');
@@ -73,6 +81,9 @@ const showMainScreen = (state, callback) => {
  * @return Boolean
  */
 const showStats = (data, server) => {
+  if(!data || !server) {
+    return false;
+  }
   term('\n').eraseLineAfter.green('You may also control the critters actions via the end points below:\n');
   term('\n').eraseLineAfter.green(server+'/api/create');
   term('\n').eraseLineAfter.green(server+'/api/feed');
@@ -106,9 +117,18 @@ const showStats = (data, server) => {
  * @return Boolean
  */
 const showSleepScreen = (callback) => {
-  term.singleColumnMenu(itemsSleep, function (error, response) {
+  if(!callback) {
+    return false;
+  }
+
+  term.singleColumnMenu(itemsSleep, (error, response) => {
     if (!response) {
       return false;
+    }
+    if(error) {
+      // A critical error occured. Log output and exit.
+      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      terminate();
     }
     switch (response.selectedIndex) {
       case 0:
@@ -128,9 +148,18 @@ const showSleepScreen = (callback) => {
  * @return Boolean
  */
 const showOptionsScreen = (callback) => {
-  term.singleColumnMenu(items, function (error, response) {
+  if(!callback) {
+    return false;
+  }
+
+  term.singleColumnMenu(items, (error, response) => {
     if (!response) {
       return false;
+    }
+    if(error) {
+      // A critical error occured. Log output and exit.
+      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      terminate();
     }
     switch (response.selectedIndex) {
       case 0:
@@ -159,6 +188,9 @@ const showOptionsScreen = (callback) => {
  * @return Boolean
  */
 const writeConsoleMessage = (messages) => {
+  if(!messages) {
+    return false;
+  }
   messages.forEach(element => {
     term('\n').eraseLineAfter.cyan('> %s', element);
   });

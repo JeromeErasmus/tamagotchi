@@ -60,9 +60,10 @@ class Thamagotchi {
   loadAsciiAssets() {
     this._stages.forEach(element => {
       if(element.src) {
-        fs.readFile(element.src, 'utf8', function (err,data) {
+        fs.readFile(element.src, 'utf8', (err,data) => {
           if (err) {
-            return console.log(err);
+            // Lets handle this error here. If there is no file throw an error here
+            if (err) throw err;
           }
           element.data = data;
         });
@@ -85,7 +86,7 @@ class Thamagotchi {
     let x = this.food + this.hygene;
     if (x < 30 && this.health >= 0) {
       this.health--;
-      console.log(`Bad diet / hygene. Health depleted to ${this.health}`);
+      // console.log(`Bad diet / hygene. Health depleted to ${this.health}`);
     } else if (this.health < this._maxHealth) {
       this.health++;
     }
@@ -100,7 +101,7 @@ class Thamagotchi {
       this.attention--;
       if (this.attention <= 0 && this.health >= 0) {
         this.health--;
-        console.log(`No attention to critter. Health depleted to ${this.health}`);
+        // console.log(`No attention to critter. Health depleted to ${this.health}`);
       }
     }
 
