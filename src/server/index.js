@@ -1,2 +1,4 @@
+require('dotenv').config();
+
 let methods = require('./app');
-methods.app.listen(8080, () => methods.run());
+methods.app.listen(process.env.PORT, () => methods.run());

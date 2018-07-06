@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "chai": "^4.1.2",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "mocha": "^5.2.0",
     "request": "^2.87.0",
