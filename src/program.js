@@ -17,7 +17,7 @@ const doAction = (action, msg) => {
   if (msg) {
     term.bold.cyan(msg);
   }
-  axios.get(server + '/api/' + action)
+  return axios.get(server + '/api/' + action)
     .then((response) => {
       if(action === 'getstatus') {
         update(response.data);
@@ -25,24 +25,25 @@ const doAction = (action, msg) => {
         insertIntoMsgQueue(response.data.messages);
         doAction('getstatus');
       }
+      return Promise.resolve(response);
     })
     .catch((error) => {
       // If there is an operational error or programming error lets catch it here. 
       // Asyncronous errors from nodejs will be passed back up to here by callback. 
       if (error.response) {
         // The request was made and the server responded with a bad status code
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        // console.log(error.response.status);
+        // console.log(error.response.headers);
       } else if (error.request) {
         // The request was made but no response was received
-        console.log(error.request);
+        // console.log(error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
+        // console.log('Error', error.message);
       }
-      throw new Error(error);
+      return Promise.reject(error);
+      // throw new Error(error);
     });
-  return true;
 }
 
 /**
@@ -99,3 +100,9 @@ const insertIntoMsgQueue = (data) => {
 }
 
 display.showMainScreen('', doAction);
+
+// we wrap the app in a module so that it is more testable. I.e. we are excluding the listener on port 8080
+module.exports = {
+  doAction,
+  insertIntoMsgQueue,
+};

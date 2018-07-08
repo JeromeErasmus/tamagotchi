@@ -8,7 +8,7 @@ See the API command below after the setup instructions. The primary way of inter
 ## Installing
 Pull the code from the repository and make sure that you checkout the master branch. All code is merged onto the master branch via pull requests only from the dev branch. 
 
-The Express server is set up to run on: localhost:8080 Please ensure that there are no conflicting applications running on that port.
+The Express server is set up to run on: localhost:8080 Please ensure that there are no conflicting applications running on that port. You can change that in the .env configuration file.
 
 Cd into the project root directory and issue the below commands.
 
