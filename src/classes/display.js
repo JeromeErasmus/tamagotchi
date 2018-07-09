@@ -49,15 +49,15 @@ const showMainScreen = (state, callback) => {
   }
 
   if(state && state  === 'end') {
-    term('\n').eraseLineAfter.red('woops...your critter has died. :/');
+    writeLine('\n', 'red', 'woops...your critter has died. :/');
   } else {
-    term('\n').eraseLineAfter.green('Hi! Select Create New Critter to start a new Tamagotchi critter!\n');
-    term('\n').eraseLineAfter.green('Once your new critter is created you can select refresh update the screen. And also take note that your critter may fall asleep from time to time for about 5 seconds. You will not be able to control it when it is asleep.\nHave fun!\n');
+    writeLine('\n', 'green', 'Hi! Select Create New Critter to start a new Tamagotchi critter!\n');
+    writeLine('\n', 'green', 'Once your new critter is created you can select refresh update the screen. And also take note that your critter may fall asleep from time to time for about 5 seconds. You will not be able to control it when it is asleep.\nHave fun!\n');
   }
   term.singleColumnMenu(itemsEnd, (error, response) => {
     if(error) {
       // A critical error occured. Log output and exit.
-      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      writeLine('\n', 'red', "\nAn error occurs: " + error + "\n");
       terminate();
     }
     switch (response.selectedIndex) {
@@ -84,29 +84,19 @@ const showStats = (data, server) => {
   if(!data || !server) {
     return false;
   }
-  term('\n').eraseLineAfter.green('You may also control the critters actions via the end points below:\n');
-  term('\n').eraseLineAfter.green(server+'/api/create');
-  term('\n').eraseLineAfter.green(server+'/api/feed');
-  term('\n').eraseLineAfter.green(server+'/api/clean');
-  term('\n').eraseLineAfter.green(server+'/api/attention');
-  term('\n\n').eraseLineAfter.green('-'.repeat(80));
-  term('\n').eraseLineAfter.green(
-    "💛  HEALTH: %s (max %s) | 🍔   food %s (max %s)  💩  Hygene: %s (max %s) \n😀  ATTENTION: %s (max %s) \n   Age: %s\n",
-    data.stats.health || 0,
-    data.stats.maxHeath || 0,
-    data.stats.food || 0,
-    data.stats.maxFood || 0,
-    data.stats.hygene || 0,
-    data.stats.maxHygene || 0,
-    data.stats.attention || 0,
-    data.stats.maxAttention || 0,
-    data.stats.age.label || '',
-  );
-  term('').eraseLineAfter.green('-'.repeat(80));
+  writeLine('\n', 'green', 'You may also control the critters actions via the end points below:\n');
+  writeLine('\n', 'green', server+'/api/create');
+  writeLine('\n', 'green', server+'/api/feed');
+  writeLine('\n', 'green', server+'/api/clean');
+  writeLine('\n', 'green', server+'/api/attention');
+  writeLine('\n', 'green', '-'.repeat(80));
+  let statsData  = `💛  HEALTH: ${data.stats.health || 0} (max ${data.stats.maxHeath || 0}) |  🍔   Food: ${data.stats.food || 0} (max ${data.stats.maxFood || 0})  |  💩  Hygene: ${data.stats.hygene || 0} (max ${data.stats.maxHygene || 0})  \n😀  ATTENTION: ${data.stats.attention || 0} (max ${data.stats.maxAttention || 0})   \nAge: ${data.stats.age.label || ''}\n`;
+  writeLine('\n', 'green', statsData);
+  writeLine('', 'green', '-'.repeat(80));
 
   if(data.stats.age && data.stats.age.data) {
-    term('\n').eraseLineAfter.gray(data.stats.age.data);
-    term('\n');
+    writeLine('\n', 'gray', data.stats.age.data);
+    writeLine('\n', '', '');
   }
 }
 
@@ -127,7 +117,7 @@ const showSleepScreen = (callback) => {
     }
     if(error) {
       // A critical error occured. Log output and exit.
-      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      writeLine('', 'red', "\nAn error occurs: " + error + "\n");
       terminate();
     }
     switch (response.selectedIndex) {
@@ -148,7 +138,7 @@ const showSleepScreen = (callback) => {
  * @return Boolean
  */
 const showOptionsScreen = (callback) => {
-  if(!callback) {
+  if(!callback || process.env.ENV === 'test' ) {
     return false;
   }
 
@@ -158,7 +148,7 @@ const showOptionsScreen = (callback) => {
     }
     if(error) {
       // A critical error occured. Log output and exit.
-      term.red.bold( "\nAn error occurs: " + error + "\n" ) ;
+      writeLine('', 'red', "\nAn error occurs: " + error + "\n");
       terminate();
     }
     switch (response.selectedIndex) {
@@ -192,10 +182,33 @@ const writeConsoleMessage = (messages) => {
     return false;
   }
   messages.forEach(element => {
-    term('\n').eraseLineAfter.cyan('> %s', element);
+    writeLine('\n', 'cyan', `> ${element}`);
   });
   term('\n');
   return true;
+}
+
+const writeLine = (a, col, msg) => {
+  if(process.env.ENV !== 'test') {
+    switch (col) {
+      case 'green':
+      term(a).eraseLineAfter.green(msg);
+        break;
+      case 'gray':
+      term(a).eraseLineAfter.gray(msg);
+        break;
+      case 'cyan':
+      term(a).eraseLineAfter.cyan(msg);
+        break;
+      case 'red':
+      term(a).eraseLineAfter.red(msg);
+        break;
+      default:
+        break;
+    }
+  } else {
+    
+  }
 }
 
 module.exports = {
@@ -203,5 +216,6 @@ module.exports = {
   showMainScreen,
   showSleepScreen,
   showOptionsScreen,
-  writeConsoleMessage
+  writeConsoleMessage,
+  writeLine
 };

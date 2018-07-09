@@ -15,7 +15,7 @@ const server = 'http://'+process.env.HOST+':'+process.env.PORT;
 const doAction = (action, msg) => {
   term.clear();
   if (msg) {
-    term.bold.cyan(msg);
+    display.writeLine('', 'cyan', msg);
   }
   return axios.get(server + '/api/' + action)
     .then((response) => {
@@ -57,8 +57,8 @@ const update = (data) => {
     return false;
   }
   term.clear();
-  term.bold.gray('Choose from one of the following actions below...\n');
-  term.green('Hit CTRL-C to quit.\n');
+  display.writeLine('', 'gray', 'Choose from one of the following actions below...\n');
+  display.writeLine('', 'green', 'Hit CTRL-C to quit.\n');
   if (data.messages) {
     insertIntoMsgQueue(data.messages);
   }

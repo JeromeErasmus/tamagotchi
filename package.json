@@ -8,7 +8,7 @@
     "server": "nodemon src/server/index.js",
     "console": "node src/program.js",
     "dev": "concurrently \"npm run console\" \"npm run server\"",
-    "test": "./node_modules/.bin/mocha  --exit --reporter spec"
+    "test": "ENV=test ./node_modules/.bin/mocha  --exit --reporter spec"
   },
   "author": "Jerome Erasmus",
   "license": "",
