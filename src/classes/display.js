@@ -204,10 +204,12 @@ const writeLine = (a, col, msg) => {
       term(a).eraseLineAfter.red(msg);
         break;
       default:
+        term(a).eraseLineAfter.gray(msg);
         break;
     }
+    return true;
   } else {
-    
+    return false;
   }
 }
 

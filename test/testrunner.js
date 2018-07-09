@@ -5,6 +5,7 @@ const expect = chai.expect;
 const serverUrl = 'http://' + process.env.HOST + ':' + process.env.PORT;
 let methods = require('../src/server/app');
 let consoleApp = require('../src/program');
+let display = require('../src/classes/display');
 let server = null;
 
 // set up
@@ -154,6 +155,10 @@ describe('test console application functions', () => {
         expect(error.response.status).to.equal(404);
       })
       done();
+    });
+
+    it('returns false after writing a line to the console in test mode (ENV=test)', () => {
+      expect(display.writeLine('', 'cyan', 'test line')).to.equal(false);
     });
   });
 });
