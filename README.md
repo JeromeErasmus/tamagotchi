@@ -1,7 +1,7 @@
 # Tamagotchi Nodejs app
 This project was fun! It brings back so many great memories I had as a kid of playing with Tamagotchi toys and keeping the little critters alive. 
 
-The console application is built with ES6 Nodejs with a twist. There is an Express server sitting behind the console application that it interacts with. I wanted to make the application and deployable to the cloud and allow anyone to interact with it via an API. Why you ask? Well first, API's are the bread and butter of software and two, who is going to feed your critter when you on holiday? 
+The console application is built with ES6 Nodejs with a twist. There is an Express server sitting behind the console application that it interacts with. I wanted to make the application deployable to the cloud and allow anyone to interact with it via an API. Why you ask? Well first, API's are the bread and butter of software and two, who is going to feed your critter when you on holiday? 
 
 See the API command below after the setup instructions. The primary way of interacting with the application is through the console which issues http based API requests to the Express server. This project was Built with Visual Studio Code.
 
