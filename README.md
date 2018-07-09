@@ -33,7 +33,6 @@ Open a new terminal window and issue the below commands:
 $ cd /
 $ yarn server
 ```
-Then head over to localhost:8080
 
 
 ### 2. Starting the console app
