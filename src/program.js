@@ -67,8 +67,7 @@ const update = (data) => {
   if(display.writeConsoleMessage(messages)) {
     messages = [];
   }
-
-  if (!data.isAlive) {
+  if (!data.isAlive || (data.stats.stageIndex >= data.stats.maxStages)) {
     // check is alive
     display.showMainScreen('end', doAction);
     return false;
