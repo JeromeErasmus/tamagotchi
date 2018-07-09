@@ -17,7 +17,7 @@ class Thamagotchi {
     this._attentionInc = 1;
     this._sleep = false;
     this._sleepDuration = 5000;
-    this._maxAge = 180; // time in seconds
+    this._maxAge = 16; // time in seconds
     this._maxAgeCount = 0;
     this._stages = [
       {label:'egg/infant', src:'src/assets/egg.txt', data: null},
@@ -109,7 +109,8 @@ class Thamagotchi {
       this.countdownTimer();
     } else {
       this.health = 0;
-      console.log('critter died of old age.')
+      // this.isAlive = false;
+      console.log('critter died of old age.');
     }
     console.log(this._maxAgeCount, this._maxAge);
     console.log(this._stageIndex);
@@ -125,7 +126,7 @@ class Thamagotchi {
    */
   countdownTimer() {
     const unit = this._maxAge / (this._stages.length-1);
-    if (this._maxAgeCount < (this._maxAge)) {
+    if (this._maxAgeCount < this._maxAge) {
       this._maxAgeCount++;
       this._stageIndex = Math.floor(this._maxAgeCount / unit);
     }
@@ -293,6 +294,8 @@ class Thamagotchi {
         attention: this.attention,
         maxAttention: this._maxAttention,
         age: this._stages[this._stageIndex],
+        stageIndex:this._stageIndex,
+        maxStages:this._stages.length-1,
       },
       messages: messages
     };
@@ -305,10 +308,10 @@ class Thamagotchi {
    * @return Boolean
    */
   logStats() {
-    console.log('-'.repeat(80));
     console.log('HEALTH: ', this.health, ' | food: ', this.food, ' | hygene: ', this.hygene);
     console.log('ATTENTION: ', this.attention);
     console.log('Action: ', this.sleep ? 'sleeping' : '-');
+    console.log('-'.repeat(80));
     return true;
   }
 
