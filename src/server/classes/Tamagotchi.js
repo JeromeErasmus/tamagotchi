@@ -17,7 +17,7 @@ class Thamagotchi {
     this._attentionInc = 1;
     this._sleep = false;
     this._sleepDuration = 5000;
-    this._maxAge = 180; // time in seconds
+    this._maxAge = 160; // time in seconds
     this._maxAgeCount = 0;
     this._stages = [
       {label:'egg/infant', src:'src/assets/egg.txt', data: null},
@@ -167,8 +167,17 @@ class Thamagotchi {
         this.sleep = false;
         clearTimeout(timerId);
       }, t)
+      return {
+        success: true,
+        messages: []
+      }
+    } else {
+      return {
+        success: false,
+        messages: []
+      };
     }
-    return true;
+    
   }
 
   /**

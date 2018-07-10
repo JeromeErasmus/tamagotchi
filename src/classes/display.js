@@ -4,7 +4,7 @@ let items = [
   'b. Feed critter',
   'c. Clean critter / clean poops',
   'c. Play with critter',
-  // 'd. Send critter to sleep',
+  'd. Send critter to sleep',
 ];
 let itemsEnd = [
   'a. Create New Critter',
