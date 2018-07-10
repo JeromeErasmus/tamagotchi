@@ -103,6 +103,16 @@ describe('test the server endpoints', () => {
       });
     });
   });
+
+  describe('test GET /api/sleep', () => {
+    let url = serverUrl + "/api/sleep";
+    it('returns status 200', (done) => {
+      request(url, (error, response, body) => {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 });
 
 // test the console applciation 
@@ -138,6 +148,13 @@ describe('test console application functions', () => {
     });
     it('returns true after executing Clean', (done) => {
       consoleApp.doAction('clean', '')
+      .then((response) => {
+        expect(response.status).to.equal(200);
+        done();
+      })
+    });
+    it('returns true after executing Sleep', (done) => {
+      consoleApp.doAction('sleep', '')
       .then((response) => {
         expect(response.status).to.equal(200);
         done();
