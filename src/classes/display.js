@@ -4,6 +4,7 @@ let items = [
   'b. Feed critter',
   'c. Clean critter / clean poops',
   'c. Play with critter',
+  // 'd. Send critter to sleep',
 ];
 let itemsEnd = [
   'a. Create New Critter',
@@ -163,6 +164,9 @@ const showOptionsScreen = (callback) => {
         break;
       case 3:
         callback('attention');
+        break;
+      case 4:
+        callback('sleep');
         break;
       default:
         break;

@@ -69,6 +69,16 @@ app.get('/api/attention', (req, res) => {
 });
 
 /**
+ * Tell the Tamagotchi critter to sleep.
+ *
+ * @param  none
+ * @return Json
+ */
+app.get('/api/sleep', (req, res) => {
+  res.send(pet.doSleep());
+});
+
+/**
  * Get status for the Tamagotchi critter.
  *
  * @param  none
