@@ -112,8 +112,6 @@ class Thamagotchi {
       // this.isAlive = false;
       console.log('critter died of old age.');
     }
-    console.log(this._maxAgeCount, this._maxAge);
-    console.log(this._stageIndex);
 
     return true;
   }
@@ -140,7 +138,7 @@ class Thamagotchi {
    * @return Boolean
    */
   isAlive() {
-    return this.health <= 0 ? false : true;
+    return this.health <= 0
   }
 
   /**
@@ -150,7 +148,7 @@ class Thamagotchi {
    * @return Boolean
    */
   isSleeping() {
-    return this.sleep <= 0 ? false : true;
+    return this.sleep <= 0;
   }
 
   /**
