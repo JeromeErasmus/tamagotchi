@@ -138,7 +138,7 @@ class Thamagotchi {
    * @return Boolean
    */
   isAlive() {
-    return this.health <= 0
+    return this.health <= 0 ? false : true;
   }
 
   /**
@@ -148,7 +148,7 @@ class Thamagotchi {
    * @return Boolean
    */
   isSleeping() {
-    return this.sleep <= 0;
+    return this.sleep <= 0 ? false : true;
   }
 
   /**
